@@ -154,7 +154,7 @@ module.exports = (g) =>
 		e.addField("Noodlemire’s Note:", "A multi-purpose support role, but one that has very limited use if nobody has died yet. You may want to prioritize dissecting people of a specific category first, to gain ammo for whichever flask you find the most useful.");
 	});
 
-	register_role(["priestess", "pri"], "Hero", "Priest", {subCat: "Protective"}, (e) =>
+	register_role(["priestess", "priest", "pri"], "Hero", "Priestess", {subCat: "Protective"}, (e) =>
 	{
 		e.author.iconURL = "https://media.discordapp.net/attachments/930956687580483584/930963655258947634/Priestess.png";
 

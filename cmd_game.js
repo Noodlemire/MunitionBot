@@ -19,6 +19,9 @@ function getPlayerByName(players, name)
 
 function isInt(v)
 {
+	if(typeof v !== "string")
+		v = v.toString();
+
 	return parseInt(v, 10).toString() === v;
 }
 
@@ -287,4 +290,70 @@ module.exports = (g) =>
 
 		overwrite();
 	}, true);
+
+	register_cmd(["role_spread", "rolespread", "rs"], "[number]", "Role Spread", "Create a Role Spread for a theoretical game with a provided number of players. Note that 16 is both the minimum and default player count.", (chn, message, e, args) =>
+	{
+		let pCount = Number(args[0]);
+
+		if(!args[0])
+			pCount = 16;
+
+		if(args[0] && !isInt(args[0]))
+		{
+			msg(chn, "-ERROR: The provided parameter must be a whole number.");
+			return;
+		}
+
+		if(pCount < 16)
+		{
+			msg(chn, "-ERROR: " + PRE + "spread must be provided a player count of 16 or above.");
+			return;
+		}
+
+		if(pCount > 99)
+		{
+			msg(chn, "-ERROR: Sorry, this program can't handle that many players.");
+			return;
+		}
+
+		let vr = pCount - 9;
+		let heroCount = Math.round(vr * .7);
+		vr -= heroCount;
+		let evilCount = Math.round(vr * .834);
+		let neutCount = vr - evilCount;
+
+		let spread = " 1. Killing Hero\n 2. Investigative Hero\n 3. Protective Hero\n 4. Support Hero";
+
+		let slot = 5;
+
+		for(let i = 0; i < heroCount; i++)
+		{
+			spread += "\n" + (slot > 9 ? "" : " ") + slot + ". Random Hero";
+			slot += 1;
+		}
+
+		spread += "\n" + (slot > 9 ? "" : " ") + slot + ". Evil Leader"
+			+ "\n" + ((slot+1) > 9 ? "" : " ") + (slot+1) + ". Killing Evil Member";
+		slot += 2;
+
+		for(let i = 0; i < evilCount; i++)
+		{
+			spread += "\n" + (slot > 9 ? "" : " ") + slot + ". Random Evil Member";
+			slot += 1;
+		}
+
+		spread += "\n" + (slot > 9 ? "" : " ") + slot + ". Random Benign Neutral"
+			+ "\n" + ((slot+1) > 9 ? "" : " ") + (slot+1) + ". Random Malign Neutral";
+		slot += 2;
+
+		for(let i = 0; i < neutCount; i++)
+		{
+			spread += "\n" + (slot > 9 ? "" : " ") + slot + ". Random Neutral";
+			slot += 1;
+		}
+
+		spread += "\n" + slot + ". Random Any";
+
+		msg(chn, spread);
+	});
 };
