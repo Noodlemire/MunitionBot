@@ -19,7 +19,7 @@ module.exports = (g) =>
 
 		e.addField("Short Sword (Night, Infinite):", "Target someone to hit with a basic attack.");
 
-		e.addField("Throwing Stone (Night, Infinite):", "Hit someone with a ranged weak attack.");
+		e.addField("Throwing Stone (Night, x3):", "Hit someone with a ranged weak attack.");
 
 		e.addField("Objective:", factions.Hero.goal);
 
